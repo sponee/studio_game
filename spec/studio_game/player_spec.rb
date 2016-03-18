@@ -99,11 +99,11 @@ module StudioGame
         yielded << treasure
       end
 
-      yielded.should == [
+      expect(yielded).to eq([
         Treasure.new(:skillet, 200),
         Treasure.new(:hammer, 50),
         Treasure.new(:bottle, 25)
-     ]
+     ])
     end
   end
 end
