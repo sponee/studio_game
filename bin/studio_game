@@ -1,0 +1,26 @@
+#!/usr/bin/env ruby
+require_relative '../lib/studio_game/player'
+require_relative '../lib/studio_game/game'
+require_relative '../lib/studio_game/treasure_trove'
+
+game = StudioGame::Game.new("game")
+default_player_file = File.join(File.dirname(__FILE__), 'players.csv')
+game.load_players(ARGV.shift || default_player_file)
+
+loop do
+  puts "\nHow many rounds are you playing? ('quit' to exit)"
+  answer = gets.chomp.downcase
+  case answer
+  when /^\d$/
+    game.play(answer.to_i)
+  when 'quit', 'exit'
+    game.summary
+    puts "Choose a name to save your scores."
+    file_name = gets.chomp.downcase
+    game.save_high_scores("#{file_name}.txt")
+    break
+  else
+    puts "Please enter a number or 'quit'"
+  end
+end
+
