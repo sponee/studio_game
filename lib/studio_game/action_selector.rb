@@ -1,3 +1,5 @@
+require_relative 'action'
+
 module StudioGame
 
   class ActionSelector
@@ -6,11 +8,13 @@ module StudioGame
       action = gets.chomp.to_i
     end
 
-    def print_options(text, actions)
-      puts text
-      actions.each_with_index do |action, index|
-        puts "\nPress #{index} to #{action}"          
+    def print_options
+      StudioGame::ActionChooser::OPTIONS.each do |option|
+        puts "Press #{option.select} to #{option.name}"          
       end
     end
   end
 end
+
+#encounter = StudioGame::ActionSelector.new
+#encounter.print_options

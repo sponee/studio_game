@@ -1,19 +1,23 @@
 require_relative 'die'
 require_relative 'player'
 require_relative 'treasure_trove'
+require_relative 'action_selector'
+require_relative 'action'
 
 module StudioGame
   module GameTurn
     def self.take_turn(player)
-      die = Die.new
+      encounter = ActionSelector.new
       t = StudioGame::TreasureTrove.random
-      case die.roll
-      when 1..2
+      encounter.print_options
+      input = encounter.get_input
+      case input
+      when 1
         player.blam
-      when 3..4
-        puts "#{player.name} was skipped."
-      else
+      when 2
         player.w00t
+      else
+        puts "#{player.name} was skipped."
       end
       player.found_treasure(t)
     end
