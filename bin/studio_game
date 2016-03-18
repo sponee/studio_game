@@ -2,6 +2,8 @@
 require_relative '../lib/studio_game/player'
 require_relative '../lib/studio_game/game'
 require_relative '../lib/studio_game/treasure_trove'
+require_relative '../lib/studio_game/action'
+require_relative '../lib/studio_game/action_selector'
 
 game = StudioGame::Game.new("game")
 default_player_file = File.join(File.dirname(__FILE__), 'players.csv')
@@ -17,10 +19,9 @@ loop do
     game.summary
     puts "Choose a name to save your scores."
     file_name = gets.chomp.downcase
-    game.save_high_scores("#{file_name}.txt")
+    game.save_high_scores("{file_name}.txt")
     break
   else
     puts "Please enter a number or 'quit'"
   end
 end
-
