@@ -8,6 +8,7 @@ require_relative 'action_interpreter'
 module StudioGame
   module GameTurn
     def self.take_turn(player)
+      puts "#{player.name}'s turn:"
       encounter = ActionSelector.new
       t = StudioGame::TreasureTrove.random
       i = ActionInterpreter.new

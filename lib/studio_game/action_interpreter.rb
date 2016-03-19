@@ -13,6 +13,9 @@ module StudioGame
         player.blam
       when 4
         GameTurn.take_turn(player)
+      else
+        puts "Please enter a valid option."
+        GameTurn.take_turn(player)
       end
     end
 
@@ -21,6 +24,9 @@ module StudioGame
       when 1
         player.w00t
       when 4
+        GameTurn.take_turn(player)
+      else
+        puts "Please enter a valid option."
         GameTurn.take_turn(player)
       end
     end
