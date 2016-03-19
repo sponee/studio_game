@@ -8,8 +8,8 @@ module StudioGame
       action = gets.chomp.to_i
     end
 
-    def print_options
-      StudioGame::ActionChooser::OPTIONS.each do |option|
+    def print_options(options=StudioGame::ActionChooser::OPTIONS)
+      options.each do |option|
         puts "Press #{option.select} to #{option.name}"          
       end
     end
