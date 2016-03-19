@@ -3,23 +3,27 @@ require_relative 'player'
 require_relative 'treasure_trove'
 require_relative 'action_selector'
 require_relative 'action'
+require_relative 'action_interpreter'
 
 module StudioGame
   module GameTurn
     def self.take_turn(player)
+      puts "#{player.name}'s turn:"
       encounter = ActionSelector.new
       t = StudioGame::TreasureTrove.random
+      i = ActionInterpreter.new
       encounter.print_options
       input = encounter.get_input
       case input
       when 1
-        player.blam
+        encounter.print_options(StudioGame::ActionChooser::ATTACK_OPTIONS)
+        i.interpret_action_input(encounter.get_input, player)
       when 2
-        player.w00t
+        encounter.print_options(StudioGame::ActionChooser::HEAL_OPTIONS)
+        i.interpret_heal_input(encounter.get_input, player)
       else
-        puts "#{player.name} was skipped."
+        puts "#{player.name} fled."
       end
-      player.found_treasure(t)
     end
   end
 end
