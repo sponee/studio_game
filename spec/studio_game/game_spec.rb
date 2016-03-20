@@ -7,15 +7,21 @@ module StudioGame
       @game = Game.new("Knuckleheads")
       @initial_health = 100
       @player = Player.new("moe", @initial_health)
+      @player = Player.new("foe", 25)
       @game.add_player(@player)
+      @game.add_enemy(@enemy)
     end
     
     it "has a title" do
       expect(@game.title).to eq("Knuckleheads")
     end
 
-    it "has on player" do
+    it "has one player character" do
       expect(@game.players.count).to eq(1)
+    end
+
+    it "has one enemy character" do
+      expect(@game.enemies.count).to eq(1) 
     end
 
 #    it "assigns a treasure for points during a player's turn" do

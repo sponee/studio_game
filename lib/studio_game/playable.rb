@@ -1,12 +1,12 @@
 module StudioGame
   module Playable
 
-    def blam
+    def blam(enemy)
       self.health -= 10
       puts "#{name} got blammed!"
     end
     
-    def w00t
+    def w00t(player)
       self.health += 15
       puts "#{name} got w00ted!"
     end

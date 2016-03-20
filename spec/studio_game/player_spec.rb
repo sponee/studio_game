@@ -6,6 +6,7 @@ module StudioGame
 
     before(:each) do
       @player = Player.new("kyle")
+      @enemy = Player.new("enemy, 60")
       @initial_health = 60
     end
 
@@ -18,7 +19,7 @@ module StudioGame
     end
 
     it ".to_s prints a sentence" do
-      expect(@player.to_s).to eq("I'm Kyle with a health of 60 and a score of 60.")
+      expect(@player.to_s).to eq("Kyle with a health of 60.")
     end
 
     it ".score = name.count + health" do
@@ -26,13 +27,13 @@ module StudioGame
     end
 
     it ".woot += 15 health" do
-      @player.w00t
+      @player.w00t(@player)
       expect(@player.health).to eq(@initial_health + 15)
     end
 
     it ".blam -= 10 health" do
-      @player.blam
-      expect(@player.health).to eq(@initial_health - 10)
+      @enemy.blam(@enemy)
+      expect(@enemy.health).to eq(60 - 10)
     end
 
     it "computes a score as the sum of its health and points" do

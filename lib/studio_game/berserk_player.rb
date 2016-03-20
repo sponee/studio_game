@@ -12,18 +12,18 @@ require_relative 'player'
       @woots > 5
     end
 
-    def w00t
+    def w00t(player)
       super
       @woots += 1
       puts "#{@name} is berserk!" if berserk?
     end
 
-    def blam
+    def blam(enemy)
       case berserk?
       when false
         super
       else
-        w00t
+        w00t(@player)
       end
     end
   end
