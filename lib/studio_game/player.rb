@@ -13,7 +13,7 @@ module StudioGame
     end
     
     def to_s
-      "I'm #{@name} with a health of #{@health} and a score of #{score}."
+      "#{@name} with a health of #{@health}."
     end
     
     def score

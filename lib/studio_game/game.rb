@@ -4,15 +4,20 @@ require_relative 'game_turn'
 module StudioGame
   class Game
     
-    attr_accessor :title, :players
+    attr_accessor :title, :players, :enemies
     
     def initialize(title)
       @title = title
       @players = []
+      @enemies = []
     end
     
     def add_player(a_player)
       @players.push(a_player)
+    end
+
+    def add_enemy(an_enemy)
+      @enemies.push(an_enemy)
     end
 
     def load_players(from_file)
@@ -36,12 +41,13 @@ module StudioGame
       puts "#{player.name} (#{player.health})"
     end
 
-    def play(rounds)
-      1.upto(rounds) do |round|
-        puts "\nRound #{round}:"
-        
+    def play
+      round = 0
+      while @enemies.empty? == false
         @players.each do |player|
-          GameTurn.take_turn(player)
+          round += 1
+          puts "\nRound #{round}:"
+          GameTurn.take_turn(player, @players, @enemies)
         end
       end
     end
