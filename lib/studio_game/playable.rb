@@ -3,7 +3,7 @@ module StudioGame
 
     def blam(enemy)
       self.health -= 10
-      puts "#{name} got blammed!"
+      puts "#{name} got blammed! #{name} has #{health} hp."
     end
     
     def w00t(player)
@@ -13,6 +13,10 @@ module StudioGame
 
     def strong?
       self.health > 100
+    end
+
+    def dead?
+      self.health <= 0
     end
   end
 end

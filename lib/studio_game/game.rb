@@ -20,6 +20,18 @@ module StudioGame
       @enemies.push(an_enemy)
     end
 
+    def kick_dead_players(characters)
+      characters.each_with_index do |p, index|
+        @players.delete_at(index) if p.dead?
+      end
+    end
+
+    def kick_dead_enemies(characters)
+      characters.each_with_index do |p, index|
+        @enemies.delete_at(index) if p.dead?
+      end
+    end
+
     def load_players(from_file)
       File.readlines(from_file).each do |line|
         name, health = line.split(",")
@@ -43,8 +55,10 @@ module StudioGame
 
     def play
       round = 0
-      while @enemies.empty? == false
+      while @enemies.count >= 1
         @players.each do |player|
+          kick_dead_players(@players)
+          kick_dead_enemies(@enemies)
           round += 1
           puts "\nRound #{round}:"
           GameTurn.take_turn(player, @players, @enemies)

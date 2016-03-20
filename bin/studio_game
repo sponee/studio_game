@@ -17,7 +17,6 @@ game.add_enemy(StudioGame::Player.new("Kyle", 15))
 #case answer
 #when /^\d$/
 game.play
-binding.pry
 #when 'quit', 'exit'
 #game.summary
 #puts "Choose a name to save your scores."
