@@ -23,6 +23,7 @@ module StudioGame
         encounter = ActionSelector.new
         t = StudioGame::TreasureTrove.random
         i = ActionInterpreter.new
+        binding.pry
         encounter.print_options
         input = encounter.get_input
         case input

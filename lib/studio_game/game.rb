@@ -86,12 +86,10 @@ module StudioGame
               @enemies.delete_at(index)
               sorted_players.delete_at(index)
               puts "#{player.name} has been slain."
-              binding.pry
           elsif player.dead? && player.enemy == 'F'
             @players.delete_at(index)
             sorted_players.delete_at(index)
             puts "#{player.name} has been slain."
-            binding.pry
           else
             round += 1
             puts "\nRound #{round}:"
