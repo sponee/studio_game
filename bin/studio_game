@@ -8,9 +8,10 @@ require 'pry'
 
 game = StudioGame::Game.new("game")
 default_player_file = File.join(File.dirname(__FILE__), 'players.csv')
-game.load_players(ARGV.shift || default_player_file)
-game.add_enemy(StudioGame::Player.new("Kyle", 15))
-
+#game.load_players(ARGV.shift || default_player_file)
+game.add_enemy(StudioGame::Player.new("Enemy", 50, 60, 'T'))
+game.add_player(StudioGame::Player.new("Kyle", 50, 60, 'F'))
+game.add_player(StudioGame::Player.new("Alex", 50, 60, 'F'))
 #loop do
 #puts "\nHow many rounds are you playing? ('quit' to exit)"
 #answer = gets.chomp.downcase

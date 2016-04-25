@@ -5,8 +5,8 @@ module StudioGame
   describe Player do 
 
     before(:each) do
-      @player = Player.new("kyle")
-      @enemy = Player.new("enemy, 60")
+      @player = Player.new("kyle", "F")
+      @enemy = Player.new("enemy", "F")
       @initial_health = 60
     end
 
@@ -46,7 +46,7 @@ module StudioGame
 
     context "with health above 150" do
       before(:context) do
-        @player = Player.new("joe", 150)
+        @player = Player.new("joe", 150, 50, 'F')
       end
 
       it "is strong" do
@@ -73,15 +73,15 @@ module StudioGame
 
     context "in a collection of players" do
       before do
-        @player1 = Player.new("moe", 100)
-        @player2 = Player.new("larry", 200)
-        @player3 = Player.new("curly", 300)
+        @player1 = Player.new("moe", 100, 50, 'F')
+        @player2 = Player.new("larry", 200, 50, 'F')
+        @player3 = Player.new("curly", 300, 50, 'F')
 
         @players = [@player1, @player2, @player3]
       end
 
-      it "is sorted by decreasing score" do
-        expect(@players.sort).to eq([@player3, @player2, @player1])
+      it "is sorted by decreasing stamina" do
+        expect(@players.sort).to eq([@player1, @player2, @player3])
       end
     end
 

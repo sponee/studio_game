@@ -6,22 +6,26 @@ module StudioGame
     before(:each) do
       @game = Game.new("Knuckleheads")
       @initial_health = 100
-      @player = Player.new("moe", @initial_health)
-      @player = Player.new("foe", 25)
-      @game.add_player(@player)
-      @game.add_enemy(@enemy)
+      @player1 = Player.new("alex", @initial_health)
+      @player2 = Player.new("kyle", @initial_health)
+      @enemy1 = Player.new("jay", 25)
+      @enemy2 = Player.new("diego", 25)
+      @game.add_player(@player1)
+      @game.add_player(@player2)
+      @game.add_enemy(@enemy1)
+      @game.add_enemy(@enemy2)
     end
     
     it "has a title" do
       expect(@game.title).to eq("Knuckleheads")
     end
 
-    it "has one player character" do
-      expect(@game.players.count).to eq(1)
+    it "has two player characters" do
+      expect(@game.players.count).to eq(2)
     end
 
-    it "has one enemy character" do
-      expect(@game.enemies.count).to eq(1) 
+    it "has two enemy characters" do
+      expect(@game.enemies.count).to eq(2) 
     end
 
 #    it "assigns a treasure for points during a player's turn" do
@@ -54,8 +58,8 @@ module StudioGame
     it "computes total points as the sum of all player points" do
       game = Game.new("Knuckleheads")
 
-      player1 = Player.new("moe")
-      player2 = Player.new("larry")
+      player1 = Player.new("moe", "F")
+      player2 = Player.new("larry", "F")
 
       game.add_player(player1)
       game.add_player(player2)
