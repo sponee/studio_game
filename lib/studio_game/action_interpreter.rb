@@ -14,6 +14,8 @@ module StudioGame
       case input
       when 0
         self.choose_enemy(player, players, enemies)
+      when 1
+        self.choose_enemy(player, players, enemies)
       when 4
         GameTurn.take_turn(player, players, enemies)
       else
@@ -23,13 +25,19 @@ module StudioGame
     end
 
     def choose_enemy(player, players, enemies)
+      #binding.pry
       encounter = ActionSelector.new
       puts "confirm selection with '0' or access previous menu with '4'"
       enemy = encounter.get_input
       case enemy
       when 0
         enemies[enemy].blam(enemies[enemy])
+      when 1
+        self.choose_enemy(player, players, enemies)
+      when 4
+        GameTurn.take_turn(player, players, enemies)
       else
+        puts "Please enter a valid option."
         GameTurn.take_turn(player, players, enemies)
       end
     end

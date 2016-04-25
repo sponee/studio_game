@@ -78,32 +78,26 @@ module StudioGame
       sorted_players = (@players + @enemies).sort { |x,y| y.stamina <=> x.stamina }
       while @players.count >= 1 && @enemies.count >= 1
         sorted_players.each_with_index do |player, index|
-          if @players.count < 1
-            puts "You have been slain by the enemy party."
-            exit
-          elsif @enemies.count < 1
-            puts "You have slain the enemy party."
-            exit
-          elsif player.dead? && player.enemy == 'T'
+          if player.dead? && player.enemy == 'T' && @enemies.count <= 1
             @enemies.delete_at(0)
             sorted_players.delete_at(index)
             puts "#{player.name} has been slain."
-            if @players.count <= 0
-              puts "You have been slain by the enemy party."
-              exit
-            elsif @enemies.count <= 0 
-              puts "You have slain the enemy party."
-            end
-          elsif player.dead? && player.enemy == 'F'
+            puts "You have slain the enemy party."
+            exit
+          elsif player.dead? && player.enemy == 'F' && @players.count <= 1
             @players.delete_at(index)
             sorted_players.delete_at(index)
             puts "#{player.name} has been slain."
-            if @players.count <= 0
-              puts "You have been slain by the enemy party."
-              exit
-            elsif @enemies.count <= 0 
-              puts "You have slain the enemy party."
-            end
+            puts "You have been slain by the enemy party."
+            exit
+          elsif player.dead? && player.enemy == 'T' && @enemies.count > 1
+            @enemies.delete_at(0)
+            sorted_players.delete_at(index)
+            puts "#{player.name} has been slain."
+          elsif player.dead? && player.enemy == 'F' && @players.count > 1 
+            @players.delete_at(0)
+            sorted_players.delete_at(index)
+            puts "#{player.name} has been slain."
           else
             round += 1
             puts "\nRound #{round}:"

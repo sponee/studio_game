@@ -61,50 +61,50 @@ module StudioGame
         expect(@player.name).to eq("Joe")
       end
 
-    context "with health below 100" do
-      before(:context) do
-        @player = Player.new("alex", 100)
-      end
-      
-      it "is not strong" do
-        expect(@player.strong?).to eq(false)
-      end
+  context "with health below 100" do
+    before(:context) do
+      @player = Player.new("alex", 100)
+    end
+    
+    it "is not strong" do
+      expect(@player.strong?).to eq(false)
+    end
+  end
+
+  context "in a collection of players" do
+    before do
+      @player1 = Player.new("moe", 100, 50, 'F')
+      @player2 = Player.new("larry", 200, 50, 'F')
+      @player3 = Player.new("curly", 300, 50, 'F')
+
+      @players = [@player1, @player2, @player3]
     end
 
-    context "in a collection of players" do
-      before do
-        @player1 = Player.new("moe", 100, 50, 'F')
-        @player2 = Player.new("larry", 200, 50, 'F')
-        @player3 = Player.new("curly", 300, 50, 'F')
+    it "is sorted by decreasing stamina" do
+      expect(@players.sort).to eq([@player1, @player2, @player3])
+    end
+  end
 
-        @players = [@player1, @player2, @player3]
-      end
+  it "yields each found treasure and its total points" do
+    @player.found_treasure(Treasure.new(:skillet, 100))
+    @player.found_treasure(Treasure.new(:skillet, 100))
+    @player.found_treasure(Treasure.new(:hammer, 50))
+    @player.found_treasure(Treasure.new(:bottle, 5))
+    @player.found_treasure(Treasure.new(:bottle, 5))
+    @player.found_treasure(Treasure.new(:bottle, 5))
+    @player.found_treasure(Treasure.new(:bottle, 5))
+    @player.found_treasure(Treasure.new(:bottle, 5))
 
-      it "is sorted by decreasing stamina" do
-        expect(@players.sort).to eq([@player1, @player2, @player3])
-      end
+    yielded = []
+    @player.each_found_treasure do |treasure|
+      yielded << treasure
     end
 
-    it "yields each found treasure and its total points" do
-      @player.found_treasure(Treasure.new(:skillet, 100))
-      @player.found_treasure(Treasure.new(:skillet, 100))
-      @player.found_treasure(Treasure.new(:hammer, 50))
-      @player.found_treasure(Treasure.new(:bottle, 5))
-      @player.found_treasure(Treasure.new(:bottle, 5))
-      @player.found_treasure(Treasure.new(:bottle, 5))
-      @player.found_treasure(Treasure.new(:bottle, 5))
-      @player.found_treasure(Treasure.new(:bottle, 5))
-
-      yielded = []
-      @player.each_found_treasure do |treasure|
-        yielded << treasure
-      end
-
-      expect(yielded).to eq([
-        Treasure.new(:skillet, 200),
-        Treasure.new(:hammer, 50),
-        Treasure.new(:bottle, 25)
-     ])
+    expect(yielded).to eq([
+      Treasure.new(:skillet, 200),
+      Treasure.new(:hammer, 50),
+      Treasure.new(:bottle, 25)
+      ])
     end
   end
 end
