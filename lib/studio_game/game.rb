@@ -80,16 +80,30 @@ module StudioGame
         sorted_players.each_with_index do |player, index|
           if @players.count < 1
             puts "You have been slain by the enemy party."
+            exit
           elsif @enemies.count < 1
             puts "You have slain the enemy party."
+            exit
           elsif player.dead? && player.enemy == 'T'
-              @enemies.delete_at(index)
-              sorted_players.delete_at(index)
-              puts "#{player.name} has been slain."
+            @enemies.delete_at(0)
+            sorted_players.delete_at(index)
+            puts "#{player.name} has been slain."
+            if @players.count <= 0
+              puts "You have been slain by the enemy party."
+              exit
+            elsif @enemies.count <= 0 
+              puts "You have slain the enemy party."
+            end
           elsif player.dead? && player.enemy == 'F'
             @players.delete_at(index)
             sorted_players.delete_at(index)
             puts "#{player.name} has been slain."
+            if @players.count <= 0
+              puts "You have been slain by the enemy party."
+              exit
+            elsif @enemies.count <= 0 
+              puts "You have slain the enemy party."
+            end
           else
             round += 1
             puts "\nRound #{round}:"

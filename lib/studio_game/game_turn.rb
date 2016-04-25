@@ -23,7 +23,6 @@ module StudioGame
         encounter = ActionSelector.new
         t = StudioGame::TreasureTrove.random
         i = ActionInterpreter.new
-        binding.pry
         encounter.print_options
         input = encounter.get_input
         case input
@@ -46,6 +45,10 @@ module StudioGame
       if players.count > 0
         puts "#{player.name}'s turn:"
         players[0].blam(players[0])
+        if players.count <= 0
+          puts "You hav been slain by the enemy party."
+          exit
+        end
       elsif players.count <= 0
         puts "you have been slain by the enemy party."
         exit
