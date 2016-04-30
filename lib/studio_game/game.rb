@@ -1,5 +1,6 @@
 require_relative 'player'
 require_relative 'game_turn'
+require 'pry'
 
 module StudioGame
   class Game
@@ -20,15 +21,28 @@ module StudioGame
       @enemies.push(an_enemy)
     end
 
+    def party_info(party)
+      puts "Name - Health - Stamina"
+      party.each do |player|
+        puts "#{player.name} - #{player.health} - #{player.stamina}"
+      end
+    end
+
     def kick_dead_players(characters)
       characters.each_with_index do |p, index|
-        @players.delete_at(index) if p.dead?
+        if p.dead?
+          @players.delete_at(index)
+          puts "#{p.name} died and was kicked from the party."
+        end
       end
     end
 
     def kick_dead_enemies(characters)
       characters.each_with_index do |p, index|
-        @enemies.delete_at(index) if p.dead?
+        if p.dead?
+          @enemies.delete_at(index)
+          puts "#{p.name} died and was kicked from the party."
+        end
       end
     end
 
@@ -55,13 +69,38 @@ module StudioGame
 
     def play
       round = 0
-      while @enemies.count >= 1
-        @players.each do |player|
-          kick_dead_players(@players)
-          kick_dead_enemies(@enemies)
-          round += 1
-          puts "\nRound #{round}:"
-          GameTurn.take_turn(player, @players, @enemies)
+      puts "\nPlayer Party Info:"
+      party_info(@players)
+      puts "\nEnemy Party Info:"
+      party_info(@enemies)
+      sorted_players = (@players + @enemies).sort { |x,y| y.stamina <=> x.stamina }
+      while @players.count >= 1 && @enemies.count >= 1
+        sorted_players.each_with_index do |player, index|
+          if player.dead? && player.enemy == 'T' && @enemies.count <= 1
+            @enemies.delete_at(0)
+            sorted_players.delete_at(index)
+            kick_dead_enemies(@enemies)
+            puts "You have slain the enemy party."
+            exit
+          elsif player.dead? && player.enemy == 'F' && @players.count <= 1
+            @players.delete_at(index)
+            sorted_players.delete_at(index)
+            kick_dead_players(@players)
+            puts "You have slain been slain by the enemy party."
+            exit
+          elsif player.dead? && player.enemy == 'T' && @enemies.count > 1
+            @enemies.delete_at(0)
+            sorted_players.delete_at(index)
+            puts "#{player.name} has been slain."
+          elsif player.dead? && player.enemy == 'F' && @players.count > 1 
+            @players.delete_at(0)
+            sorted_players.delete_at(index)
+            puts "#{player.name} has been slain."
+          else
+            round += 1
+            puts "\nRound #{round}:"
+            GameTurn.take_turn(player, @players, @enemies)
+          end
         end
       end
     end
@@ -77,7 +116,7 @@ module StudioGame
       wimpy.each do |w|
         print_name_and_health(w)
       end
-      sorted_players = @players.sort { |x,y| y.score <=> x.score }
+      sorted_players = @players.sort { |x,y| y.stamina <=> x.stamina }
       puts "\nHigh Scores:\n"
       sorted_players.each do |p|
         puts "#{p.name.ljust(20, '.')}#{p.score}"

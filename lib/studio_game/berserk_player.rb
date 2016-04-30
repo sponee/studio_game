@@ -5,7 +5,7 @@ require_relative 'player'
 
     def initialize(name, health=60)
       @woots = 0
-      super(name, health)
+      super(name, health, stamina, enemy)
     end
 
     def berserk?

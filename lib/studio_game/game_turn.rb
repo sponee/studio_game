@@ -8,7 +8,16 @@ require 'pry'
 
 module StudioGame
   module GameTurn
+
     def self.take_turn(player, players, enemies)
+      if player.enemy == 'T'
+        self.take_enemy_turn(player, players, enemies)
+      else 
+        self.take_player_turn(player, players, enemies)
+      end
+    end
+
+    def self.take_player_turn(player, players, enemies)
       if enemies.count > 0
         puts "#{player.name}'s turn:"
         encounter = ActionSelector.new
@@ -28,6 +37,21 @@ module StudioGame
         end
       elsif enemies.count <= 0
         puts "You have slain the enemy party."
+        exit
+      end
+    end
+
+    def self.take_enemy_turn(player, players, enemies)
+      if players.count > 0
+        puts "#{player.name}'s turn:"
+        players[0].blam(players[0])
+        if players.count <= 0
+          puts "You hav been slain by the enemy party."
+          exit
+        end
+      elsif players.count <= 0
+        puts "you have been slain by the enemy party."
+        exit
       end
     end
   end

@@ -11,25 +11,25 @@ require 'pry'
 module StudioGame
   class ActionInterpreter
     def interpret_action_input(input, player, players, enemies)
-      case input
-      when 0
-        self.choose_enemy(player, players, enemies)
-      when 4
-        GameTurn.take_turn(player, players, enemies)
+      if enemies[input] != nil
+        self.choose_enemy(player, players, enemies, input)
       else
         puts "Please enter a valid option."
         GameTurn.take_turn(player, players, enemies)
       end
     end
 
-    def choose_enemy(player, players, enemies)
+    def choose_enemy(player, players, enemies, input)
       encounter = ActionSelector.new
       puts "confirm selection with '0' or access previous menu with '4'"
-      enemy = encounter.get_input
-      case enemy
+      confirmation = encounter.get_input
+      case confirmation
       when 0
-        enemies[enemy].blam(enemies[enemy])
+        enemies[input].blam(enemies[input])
+      when 4
+        GameTurn.take_turn(player, players, enemies)
       else
+        puts "Please enter a valid option."
         GameTurn.take_turn(player, players, enemies)
       end
     end

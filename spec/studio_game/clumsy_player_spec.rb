@@ -3,7 +3,7 @@ require 'studio_game/clumsy_player'
 module StudioGame
   describe ClumsyPlayer do
     before do
-      @player = ClumsyPlayer.new("klutz")
+      @player = ClumsyPlayer.new("klutz", 'F')
     end
     
     it "only gets half the point value for each treasure" do

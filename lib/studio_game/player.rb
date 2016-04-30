@@ -4,12 +4,14 @@ module StudioGame
   class Player
     include Playable
 
-    attr_accessor :name, :found_treasures, :health
+    attr_accessor :name, :found_treasures, :health, :stamina, :enemy
 
-    def initialize(name, health=60)
+    def initialize(name, health=60, stamina=50, enemy)
       @name = name.capitalize
       @health = health
+      @stamina = stamina
       @found_treasures = Hash.new(0)
+      @enemy = enemy
     end
     
     def to_s
@@ -21,7 +23,7 @@ module StudioGame
     end
 
     def <=>(other)
-      other.score <=> score
+      other.stamina <=> stamina
     end
 
     def points
