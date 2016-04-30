@@ -26,7 +26,8 @@ module StudioGame
     end
 
     it "confirms enemy choice and blams the enemy upon confirmation." do 
-      @interpreter.choose_enemy(@player1, @game.players, @game.enemies)
+      input = 0
+      @interpreter.choose_enemy(@player1, @game.players, @game.enemies, input)
       expect(@enemy1.health).to eq(90)
     end
 
