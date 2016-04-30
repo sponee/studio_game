@@ -33,7 +33,6 @@ module StudioGame
         if p.dead?
           @players.delete_at(index)
           puts "#{p.name} died and was kicked from the party."
-          binding.pry
         end
       end
     end
@@ -43,7 +42,6 @@ module StudioGame
         if p.dead?
           @enemies.delete_at(index)
           puts "#{p.name} died and was kicked from the party."
-          binding.pry
         end
       end
     end
@@ -81,14 +79,14 @@ module StudioGame
           if player.dead? && player.enemy == 'T' && @enemies.count <= 1
             @enemies.delete_at(0)
             sorted_players.delete_at(index)
-            puts "#{player.name} has been slain."
+            kick_dead_enemies(@enemies)
             puts "You have slain the enemy party."
             exit
           elsif player.dead? && player.enemy == 'F' && @players.count <= 1
             @players.delete_at(index)
             sorted_players.delete_at(index)
-            puts "#{player.name} has been slain."
-            puts "You have been slain by the enemy party."
+            kick_dead_players(@players)
+            puts "You have slain been slain by the enemy party."
             exit
           elsif player.dead? && player.enemy == 'T' && @enemies.count > 1
             @enemies.delete_at(0)
